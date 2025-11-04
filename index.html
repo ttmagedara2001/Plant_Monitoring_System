@@ -181,6 +181,41 @@
         {id:"ORC-002", name:"Orchid Greenhouse B"},
         ];
 
+          // --- GLOBAL STATE ---
+        let db, auth;
+        let userId;
+        let selectedDeviceId = MOCK_DEVICES[0].id; // Default device
+        
+        let currentThresholds = { moistureMin: 20, moistureMax: 60, tempMax: 30 };
+        let historicalDataCache = [];
+        let chartInstance = null;
+
+         // --- UNSUBSCRIBE LISTENERS ---
+        let unsubRealtime = () => {};
+        let unsubConfig = () => {};
+
+        // --- UI ELEMENT REFS ---
+        const authStatusEl = document.getElementById("auth-status");
+        const displayUserIdEl = document.getElementById("display-user-id");
+        const deviceSelectorEl = document.getElementById("device-selector");
+        const currentDeviceNameEl = document.getElementById("current-device-name");
+        const alertBannerEl = document.getElementById("alert-banner");
+        const alertMessageEl = document.getElementById("alert-message");
+        const actuatorStatusBarEl = document.getElementById("actuator-status-bar");
+        const cardsGridEl = document.getElementById("sensor-cards-grid");
+        const configFormEl = document.getElementById("config-form");
+        const saveStatusEl = document.getElementById("save-status");
+        const exportButtonEl = document.getElementById("export-csv-button");
+        const chartLoadingEl = document.getElementById("chart-loading-message");
+
+
+
+
+
+
+
+
+
 
         
 
