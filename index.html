@@ -136,10 +136,47 @@
     </main>
 
     <!--Firebase JS SDK-->
-    <!--Test-->
+        <script type="module">
+        
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInAnonymously, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            onSnapshot, 
+            collection, 
+            query, 
+            orderBy, 
+            limit, 
+            addDoc, 
+            getDocs,
+            serverTimestamp,
+            setLogLevel
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // --- GLOBAL CONFIGURATION ---
+       
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOJ9SSHaBFtEmsszktN-kq2eKQ-zzAcNw",
+            authDomain: "protonest-demo-project.firebaseapp.com",
+            projectId: "protonest-demo-project",
+            storageBucket: "protonest-demo-project.firebasestorage.app",
+            messagingSenderId: "371231527189",
+            appId: "1:371231527189:web:7e445f985b78859f28591c",
+            measurementId: "G-PP0BN799DV"
+        };
+        
 
     
+
+
+    </script>  
 
 </body>
 </html>
