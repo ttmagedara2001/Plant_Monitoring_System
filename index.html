@@ -208,6 +208,78 @@
         const exportButtonEl = document.getElementById("export-csv-button");
         const chartLoadingEl = document.getElementById("chart-loading-message");
 
+         // --- 1. INITIALIZATION ---
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // Check if Firebase config is still the placeholder or invalid
+            if (!firebaseConfig.apiKey || firebaseConfig.apiKey.includes("YOUR_API_KEY")) {
+                console.error("CRITICAL: Firebase config is missing or invalid.");
+                authStatusEl.innerHTML = `<span class="font-medium text-red-600">Firebase Config Error</span>`;
+                alert("Please replace the placeholder keys in the JavaScript with your actual Firebase config.");
+                return;
+            }
+            
+            try {
+                // Initialize the app with the provided config
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                setLogLevel('Debug');
+                
+                // Populate device selector (This runs BEFORE auth is complete)
+                MOCK_DEVICES.forEach(device => {
+                    const option = document.createElement('option');
+                    option.value = device.id;
+                    option.textContent = device.name;
+                    deviceSelectorEl.appendChild(option);
+                });
+                deviceSelectorEl.value = selectedDeviceId;
+
+                // Listen for auth state changes
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        // User is already signed in
+                        handleAuthSuccess(user);
+                    } else {
+                        // No user, sign in anonymously for this demo
+                        try {
+                            const userCredential = await signInAnonymously(auth);
+                            handleAuthSuccess(userCredential.user);
+                        } catch (error) {
+                            handleAuthError(error);
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase Init Error:", error);
+                authStatusEl.innerHTML = `<span class="font-medium text-red-600">Firebase Init Failed</span>`;
+            }
+
+            // Add event listeners (Must be added once DOM is ready)
+            deviceSelectorEl.addEventListener('change', handleDeviceChange);
+            configFormEl.addEventListener('submit', handleSaveSettings);
+            exportButtonEl.addEventListener('click', exportToCSV);
+        });
+
+        function handleAuthSuccess(user) {
+            userId = user.uid;
+            authStatusEl.innerHTML = `<span class="font-medium text-green-600">Authentication successful.</span>`;
+            displayUserIdEl.textContent = `User ID: ${userId.substring(0, 10)}...`; // Shorten for display
+            
+            // Start the mock data simulation
+            startDataSimulation();
+            
+            // Load all data for the default device
+            refreshAllDeviceData();
+        }
+
+        function handleAuthError(error) {
+            console.error("Auth Error:", error);
+            authStatusEl.innerHTML = `<span class="font-medium text-red-600">AUTH_FAILED</span>`;
+        }
+
+
+
 
 
 
