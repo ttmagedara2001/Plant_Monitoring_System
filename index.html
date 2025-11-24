@@ -71,7 +71,7 @@
     </div>
 
     <!--Header-->
-    <header id="main-header" class = "bg-white-shadow-sm hidden">
+    <header id="main-header" class = "bg-white shadow-sm hidden">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <!-- Logo -->
             <div class="flex items-center space-x-3">
@@ -323,6 +323,9 @@
         async function handleLogin(e) {
             e.preventDefault();
             
+            // NOTE: This login form expects the user account to be created in Firebase Console
+            // with email: thulanimagedara@gmail.com and password: 1234567
+            // In production, implement proper user management and avoid hardcoded credentials
             const email = loginEmailEl.value;
             const password = loginPasswordEl.value;
             
